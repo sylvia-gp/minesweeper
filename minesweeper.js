@@ -1,19 +1,25 @@
 document.addEventListener('DOMContentLoaded', startGame)
 
 // Define your `board` object here!
-var board = {
-  cells: [
-  {row: 0, col: 0, isMine: false, hidden: true},
-  {row: 0, col: 1, isMine: true, hidden: true},
-  {row: 0, col: 2, isMine: false, hidden: true},
-  {row: 1, col: 0, isMine: false, hidden: true},
-  {row: 1, col: 1, isMine: true, hidden: true},
-  {row: 1, col: 2, isMine: false, hidden: true},
-  {row: 2, col: 0, isMine: true, hidden: true},
-  {row: 2, col: 1, isMine: false, hidden: true},
-  {row: 2, col: 2, isMine: false, hidden: true},
-  ]
+var board = {}
+board.cells = []
+boardHeight = 6
+
+function createCell(num){
+  for (r=0; r<num; r++){
+    for(c=0; c<num; c++){
+      newCell = {}
+      newCell.row = r
+      newCell.col = c
+      newCell.isMine = Math.random() < 0.25
+      newCell.isMarked = false
+      newCell.hidden = true
+      board.cells.push(newCell)
+    }
+  }
 }
+
+createCell(boardHeight)
 
 function startGame () {
   // Don't remove this function call: it makes the game work!
@@ -22,7 +28,18 @@ function startGame () {
    }
    document.addEventListener("click", checkForWin)
    document.addEventListener("contextmenu", checkForWin)
+   document.getElementById("board").addEventListener("click", checkForLoss)
+   document.getElementById("reset").addEventListener("click", resetBoard)
   lib.initBoard()
+}
+
+function checkForLoss(){
+  for(i=0;i<board.cells.length;i++){
+    if(board.cells[i].isMine === true && board.cells[i].isMarked === false && board.cells[i].hidden === false){
+      var audio = new Audio('audio/explosion-3.wav')
+      audio.play()
+      }
+   }
 }
 
 // Define this function to look for a win condition:
@@ -36,7 +53,9 @@ function checkForWin () {
     } else if (board.cells[i].isMine === true && board.cells[i].isMarked === false){
       return
     }
-  } lib.displayMessage('You win!')
+  } lib.displayMessage("You're a hero!")
+  let audio = new Audio('audio/win-music.wav')
+  audio.play()
 
   // You can use this function call to declare a winner (once you've
   // detected that they've won, that is!)
@@ -60,3 +79,11 @@ function countSurroundingMines (cell) {
   } return count
 }
 
+function resetBoard (){
+  var boardNode = document.getElementById("board")
+  boardNode.innerHTML = ""
+  board.cells = []
+  createCell(boardHeight)
+  startGame()
+}
+ 

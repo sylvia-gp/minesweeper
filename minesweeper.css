@@ -8,6 +8,10 @@ body {
   align-items: center;
   justify-content: flex-center;
   flex-direction: column;
+  background-image: url("images/bomb-shop.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #message, #notes {
@@ -18,11 +22,14 @@ body {
 
 #message {
   font-size: 1.5rem;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
 }
 
 .board {
   display: flex;
   flex-wrap: wrap;
+  font-family: 'Press Start 2P', cursive;
 }
 
 .board div {
@@ -44,7 +51,7 @@ body {
 }
 
 div.mine, div.mine:hover {
-  background: no-repeat center/60% url("images/bomb.svg") crimson;
+  background: no-repeat center/60% url("images/blueBomb.png") #ce566d;
 }
 
 div.hidden {
@@ -56,5 +63,18 @@ div.hidden:hover {
 }
 
 div.marked, div.marked:hover {
-  background: no-repeat center/60% url("images/mark.svg") deepskyblue;
+  background: no-repeat center/60% url("images/fairy.png") #7b3c7799;
+}
+
+#reset {
+  font-family: 'Press Start 2P', cursive;
+  padding: 10px;
+  margin: 20px;
+  border-radius: 5%;
+  background-color: green;
+  border: 5px solid white;
+}
+
+audio {
+  height: 50px;
 }
